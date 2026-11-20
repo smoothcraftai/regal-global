@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="150" height="100" viewBox="0 0 1500 1000" role="img" aria-labelledby="title desc">
+  <title id="title">Regal Global Real Estate</title>
+  <desc id="desc">RG monogram with a gold globe motif, Regal Global name, Real Estate descriptor and International Real Estate Company tagline.</desc>
+  <defs>
+    <linearGradient id="gold" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#8e5a08"/>
+      <stop offset="0.28" stop-color="#f4d477"/>
+      <stop offset="0.55" stop-color="#b77a16"/>
+      <stop offset="0.78" stop-color="#ffe6a0"/>
+      <stop offset="1" stop-color="#94600b"/>
+    </linearGradient>
+    <linearGradient id="ivory" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#fff9e9"/>
+      <stop offset="1" stop-color="#d9cdaF"/>
+    </linearGradient>
+  </defs>
+  <!-- Globe framework -->
+  <g fill="none" stroke="url(#gold)" stroke-width="9" stroke-linecap="round">
+    <path d="M540 235 C610 92 775 35 925 65 C1085 96 1190 220 1195 385"/>
+    <path d="M620 175 C735 105 930 95 1095 180"/>
+    <path d="M590 225 C760 185 1000 185 1150 260"/>
+    <path d="M680 120 C740 205 770 275 770 350"/>
+    <path d="M845 65 C790 150 770 235 775 315"/>
+    <path d="M930 68 C1010 145 1040 240 1030 330"/>
+    <path d="M1080 150 C1035 215 1015 280 1020 345"/>
+  </g>
+  <!-- RG monogram -->
+  <g font-family="Georgia, 'Times New Roman', serif" font-weight="normal" fill="url(#ivory)" text-anchor="middle">
+    <text x="748" y="600" font-size="500" letter-spacing="-38">RG</text>
+  </g>
+  <!-- Gold sweep across monogram -->
+  <path d="M345 520 C495 420 750 410 930 460 C770 430 520 480 355 610 C335 625 320 600 345 520Z" fill="url(#gold)"/>
+  <!-- Brand name -->
+  <text x="750" y="745" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="116" letter-spacing="2" fill="url(#ivory)">REGAL GLOBAL</text>
+  <!-- Descriptor and side rules -->
+  <g stroke="url(#gold)" stroke-width="6" fill="none">
+    <path d="M155 813 H355"/><path d="M1145 813 H1345"/>
+  </g>
+  <text x="750" y="837" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="62" letter-spacing="22" fill="url(#ivory)">REAL ESTATE</text>
+  <text x="750" y="915" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="31" letter-spacing="10" fill="url(#ivory)">INTERNATIONAL REAL ESTATE COMPANY</text>
+</svg>

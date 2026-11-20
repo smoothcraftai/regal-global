@@ -1,0 +1,138 @@
+datasource db {
+  provider = "postgresql"
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+enum ListingStatus {
+  DRAFT
+  PENDING_REVIEW
+  PUBLISHED
+  ARCHIVED
+}
+
+enum SourceType {
+  OWN
+  PARTNER
+  DEVELOPER
+}
+
+enum LeadStatus {
+  NEW
+  CONTACTED
+  QUALIFIED
+  IN_DISCUSSION
+  CONVERTED
+  LOST
+}
+
+enum AdminRole {
+  SUPER_ADMIN
+  SALES_MANAGER
+  SALES_AGENT
+  PROPERTY_MANAGER
+  CONTENT_MANAGER
+}
+
+model AdminUser {
+  id           String     @id @default(uuid())
+  name         String
+  email        String     @unique
+  passwordHash String     @map("password_hash")
+  role         AdminRole  @default(SUPER_ADMIN)
+  active       Boolean    @default(true)
+  createdAt    DateTime   @default(now()) @map("created_at")
+  leads        Lead[]     @relation("AssignedLeads")
+  auditLogs    AuditLog[]
+
+  @@map("admin_users")
+}
+
+model Property {
+  id             String        @id @default(uuid())
+  referenceCode  String        @unique @map("reference_code")
+  title          String
+  slug           String        @unique
+  destination    String
+  type           String
+  purpose        String
+  priceUSD       Decimal       @map("price_usd") @db.Decimal(14, 2)
+  priceFormatted String        @map("price_formatted")
+  bedrooms       Int
+  bathrooms      Int
+  area           String
+  image          String
+  description    String
+  sourceType     SourceType    @default(OWN) @map("source_type")
+  sourceOrg      String        @default("Regal Global Master") @map("source_org")
+  status         ListingStatus @default(PUBLISHED)
+  featured       Boolean       @default(true)
+  createdAt      DateTime      @default(now()) @map("created_at")
+  updatedAt      DateTime      @updatedAt @map("updated_at")
+
+  @@index([status, destination, type])
+  @@map("properties")
+}
+
+model Project {
+  id             String        @id @default(uuid())
+  name           String
+  developer      String
+  location       String
+  completionDate String        @map("completion_date")
+  projectStatus  String        @map("project_status")
+  description    String
+  image          String
+  status         ListingStatus @default(PUBLISHED)
+  createdAt      DateTime      @default(now()) @map("created_at")
+
+  @@map("projects")
+}
+
+model Insight {
+  id        String        @id @default(uuid())
+  category  String
+  title     String
+  excerpt   String
+  image     String
+  status    ListingStatus @default(PUBLISHED)
+  createdAt DateTime      @default(now()) @map("created_at")
+
+  @@map("insights")
+}
+
+model Lead {
+  id           String     @id @default(uuid())
+  referenceId  String     @unique @map("reference_id")
+  name         String
+  email        String
+  phone        String
+  enquiryType  String     @map("enquiry_type")
+  context      String
+  budget       String?
+  message      String?
+  status       LeadStatus @default(NEW)
+  internalNote String?    @map("internal_note")
+  followUpDate DateTime?  @map("follow_up_date")
+  assignedToId String?    @map("assigned_to_id")
+  assignedTo   AdminUser? @relation("AssignedLeads", fields: [assignedToId], references: [id])
+  createdAt    DateTime   @default(now()) @map("created_at")
+  updatedAt    DateTime   @updatedAt @map("updated_at")
+
+  @@index([status, createdAt])
+  @@map("leads")
+}
+
+model AuditLog {
+  id        String    @id @default(uuid())
+  adminId   String    @map("admin_id")
+  admin     AdminUser @relation(fields: [adminId], references: [id])
+  action    String
+  entity    String
+  details   String?
+  createdAt DateTime  @default(now()) @map("created_at")
+
+  @@map("audit_logs")
+}
